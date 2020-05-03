@@ -20,3 +20,11 @@ It is a tab-separated table with the following 5 or 6 columns:
 * seg.mean – segment mean value, usually in log2 scale
 
 Metadata is optional for organizing the samples by annotations. If you choose to add metadata, please make sure the first column contains sample names identical to those in the segment file.
+
+To use:
+1. Select genome. ![genome](screenshots/select_genome.png)
+2. Upload .seg file.
+3. Upload metadata file (optional).
+4. Select column annotation. ![meta_columns](screenshots/meta_columns.png)
+5. Click "Plot Heatmap".
+6. Save plot.
