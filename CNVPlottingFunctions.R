@@ -20,6 +20,8 @@ readSeg <- function(file.path, chromCoords){
 
 # Transfer the values from data frame into the matrix
 populateCNVMatrix <- function(chromCoords, coordMat, segDf){
+  coordMat <- subset(coordMat, chr %in% segDf$chromosome)
+  chromCoords <- subset(chromCoords, chr %in% segDf$chromosome)
   samples <- unique(segDf$Sample)
   cnvMat <- matrix(rep(rep(0,nrow(coordMat)),length(samples)),ncol=length(samples))
   colnames(cnvMat) <- samples
@@ -31,6 +33,8 @@ populateCNVMatrix <- function(chromCoords, coordMat, segDf){
 }
 
 makeHeatmapAnnotations <- function(cnvMat, chromCoords, coordMat, metadata, column_anno){
+  coordMat <- subset(coordMat, chr %in% row.names(cnvMat))
+  chromCoords <- subset(chromCoords, chr %in% row.names(cnvMat))
   set.seed(1)
   if(!is.null(metadata)){
     metadata <- subset(metadata, Sample %in% colnames(cnvMat))
@@ -62,7 +66,7 @@ plotCNVHeatmap <- function(cnvMat, annos){
   if(is.null(annos$colOrder)){
     cnvMat <- cnvMat
   } else {
-    cnvMat <- cnvMat[,annos$colOrder]
+    cnvMat <- cnvMat[,as.character(annos$colOrder)]
   }
   hm <- Heatmap(cnvMat, bottom_annotation = annos$columnAnno,
                 cluster_columns = FALSE,
