@@ -22,9 +22,9 @@ It is a tab-separated table with the following 5 or 6 columns:
 Metadata is optional for organizing the samples by annotations. If you choose to add metadata, please make sure the first column contains sample names identical to those in the segment file.
 
 To use:
-1. Select genome. ![genome](screenshots/select_genome.png)
+1. Select genome. ![genome](screenshots/select_genome.png=100x20)
 2. Upload .seg file.
 3. Upload metadata file (optional).
-4. Select column annotation. ![meta_columns](screenshots/meta_columns.png)
+4. Select column annotation. ![meta_columns](screenshots/meta_columns.png=100x20)
 5. Click "Plot Heatmap".
 6. Save plot.
