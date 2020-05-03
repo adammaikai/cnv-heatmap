@@ -1,6 +1,6 @@
-hg19.genome.sizes <- "hg19.chrom.sizes.txt"
-hg38.genome.sizes <- "hg38.chrom.sizes.txt"
-mm10.genome.sizes <- "mm10.chrom.sizes.txt"
+hg19.genome.sizes <- "../data/hg19.chrom.sizes.txt"
+hg38.genome.sizes <- "../data/hg38.chrom.sizes.txt"
+mm10.genome.sizes <- "../data/mm10.chrom.sizes.txt"
 
 # Chromosome sizes, for binning and plotting coordinates
 binGenome <- function(chromSizesPath){
@@ -15,4 +15,4 @@ binGenome <- function(chromSizesPath){
 chromCoordsHg19 <- binGenome(hg19.genome.sizes)
 chromCoordsHg38 <- binGenome(hg38.genome.sizes)
 chromCoordsMm10 <- binGenome(mm10.genome.sizes)
-save(chromCoordsHg19, chromCoordsHg38, chromCoordsMm10, file="CNVPlottingPrep.RData")
+save(chromCoordsHg19, chromCoordsHg38, chromCoordsMm10, file="../data/CNVPlottingPrep.RData")

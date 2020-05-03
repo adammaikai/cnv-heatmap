@@ -1,7 +1,7 @@
 # CNV Analysis App
 
-source("CNVPlottingFunctions.R")
-load("CNVPlottingPrep.RData")
+source("src/CNVPlottingFunctions.R")
+load("data/CNVPlottingPrep.RData")
 
 # Define UI for data upload app ----
 ui <- fluidPage(
@@ -104,10 +104,16 @@ server <- function(input, output, session) {
         column <- NULL}
     print(coords)
     coordMat <- do.call(rbind, lapply(coords$chr,
-                                      function(i) {chr.i <- subset(coords, chr==i);
-                                      return(data.frame(row=seq(chr.i$start, chr.i$cumsum, by=100000), chr=i))}))
-    cnvMat <- populateCNVMatrix(chromCoords = coords, coordMat = coordMat, segDf = seg)
-    annos <- makeHeatmapAnnotations(cnvMat = cnvMat, chromCoords = coords, coordMat = coordMat, metadata = meta, column_anno = column)
+                        function(i) {chr.i <- subset(coords, chr==i);
+                        return(data.frame(row=seq(chr.i$start, chr.i$cumsum, by=100000), chr=i))}))
+    cnvMat <- populateCNVMatrix(chromCoords = coords,
+                                coordMat = coordMat,
+                                segDf = seg)
+    annos <- makeHeatmapAnnotations(cnvMat = cnvMat,
+                                    chromCoords = coords,
+                                    coordMat = coordMat,
+                                    metadata = meta,
+                                    column_anno = column)
     plotCNVHeatmap(cnvMat = cnvMat, annos = annos)
     
   })  
