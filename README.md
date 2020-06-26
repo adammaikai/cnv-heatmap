@@ -16,7 +16,7 @@ It is a tab-separated table with the following 5 or 6 columns:
 * chrom – chromosome name or ID
 * loc.start – segment’s genomic start position, 1-indexed
 * loc.end – segment end position
-* num.mark – (optional) number of probes or bins covered by the segment
+* num.mark – number of probes or bins covered by the segment
 * seg.mean – segment mean value, usually in log2 scale
 
 Metadata is optional for organizing the samples by annotations. If you choose to add metadata, please make sure the first column contains sample names identical to those in the segment file.

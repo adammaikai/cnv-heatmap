@@ -5,6 +5,7 @@ library(DT)
 library(ComplexHeatmap)
 library(circlize)
 library(plyr)
+library(reshape2)
 options(shiny.maxRequestSize=1000*1024^2)
 
 
@@ -51,12 +52,12 @@ makeHeatmapAnnotations <- function(cnvMat, chromCoords, coordMat, metadata, colu
   rowAnnoDf <- data.frame(chr=row.labels)
   chromColorList <- list(chr=chromCoords$color)
   names(chromColorList[[1]]) <- chromCoords$chr
-  chromLabels <- unlist(lapply(chromCoords$chr,
-                               function(i) c(rep("", floor(nrow(subset(coordMat, chr==i))/2)), i, rep("", ceiling(nrow(subset(coordMat, chr==i))/2)-1))))
-  hmtx <- HeatmapAnnotation(text = row_anno_text(chromLabels),
-                            which = "row",
-                            annotation_width = max_text_width(chromLabels),
-                            annotation_height = max_text_height(chromLabels))
+  # chromLabels <- unlist(lapply(chromCoords$chr,
+  #                              function(i) c(rep("", floor(nrow(subset(coordMat, chr==i))/2)), i, rep("", ceiling(nrow(subset(coordMat, chr==i))/2)-1))))
+  # hmtx <- HeatmapAnnotation(text = row_anno_text(chromLabels),
+  #                           which = "row",
+  #                           annotation_width = max_text_width(chromLabels),
+  #                           annotation_height = max_text_height(chromLabels))
   hma <- HeatmapAnnotation(df = rowAnnoDf,
                            col = chromColorList,
                            which = "row",
@@ -81,7 +82,24 @@ makeHeatmapAnnotations <- function(cnvMat, chromCoords, coordMat, metadata, colu
   }
 }
 # ComplexHeatmap
-plotCNVHeatmap <- function(cnvMat, annos){
+# plotCNVHeatmap <- function(cnvMat, annos){
+#   if(is.null(annos$colOrder)){
+#     cnvMat <- cnvMat
+#   } else {
+#     cnvMat <- cnvMat[,as.character(annos$colOrder)]
+#   }
+#   hm <- Heatmap(cnvMat, bottom_annotation = annos$columnAnno,
+#                 cluster_columns = FALSE,
+#                 cluster_rows = FALSE,
+#                 show_row_names = FALSE,
+#                 col = colorRamp2(c(-1.5, 0, 1.5), c("blue3", "white", "red3")),
+#                 name = "Copy Number Change")
+#   ht_list <- annos$hmtx + annos$hma + hm
+#   draw(ht_list)  
+# }
+
+plotCNVHeatmap <- function(cnvMat, annos, coordMat){
+  coordMat <- subset(coordMat, chr %in% row.names(cnvMat))
   if(is.null(annos$colOrder)){
     cnvMat <- cnvMat
   } else {
@@ -91,9 +109,10 @@ plotCNVHeatmap <- function(cnvMat, annos){
                 cluster_columns = FALSE,
                 cluster_rows = FALSE,
                 show_row_names = FALSE,
+                row_split = coordMat$chr,
                 col = colorRamp2(c(-1.5, 0, 1.5), c("blue3", "white", "red3")),
                 name = "Copy Number Change")
-  ht_list <- annos$hmtx + annos$hma + hm
+  ht_list <- hm
   draw(ht_list)  
 }
 

@@ -8,13 +8,6 @@ ui <- fluidPage(
   title = "CNV Heatmap",
   sidebarLayout(
     sidebarPanel(
-      HTML("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", paste0(
-        '<span data-display-if="',
-        '$(&#39;html&#39;).attr(&#39;class&#39;)==&#39;shiny-busy&#39;',
-        '">',
-        '<i class="fa fa-spinner fa-pulse fa-fw" style="color:orange"></i>',
-        '</span>'
-      )),
       radioButtons(inputId = 'genome', label = 'Select Genome',
                    c("GRCh37/hg19", "GRCh38/hg38", "GRCm38/mm10"), selected=character(0)),
       # Input: Select a .seg file ----
@@ -38,7 +31,14 @@ ui <- fluidPage(
     mainPanel(
       tabsetPanel(
         tabPanel("CNV Heatmap", id="plottab", plotOutput("Plot"))
-        ),
+        ),     
+      HTML("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", paste0(
+          '<span data-display-if="',
+          '$(&#39;html&#39;).attr(&#39;class&#39;)==&#39;shiny-busy&#39;',
+          '">',
+          '<i class="fa fa-spinner fa-pulse fa-fw" style="color:orange"></i>',
+          '</span>'
+        )),
       hr(),
       tabsetPanel(
         id = 'dataset',
